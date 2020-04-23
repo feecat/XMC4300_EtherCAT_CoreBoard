@@ -1,0 +1,31 @@
+coeappl.c 410行
+TOBJ1C00 sSyncmanagertype = {0x04, {0x0201, 0x0403}};
+
+XMC_ESC.c 266行到303行
+void APPL_InputMapping(UINT16* pData)
+{
+	memcpy(pData,&(((UINT16 *)&IN_GENERIC0x6000)[1]),SIZEOF(IN_GENERIC0x6000)-2);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/**
+\param      pData  pointer to output process data
+
+\brief    This function will copies the outputs from the ESC memory to the local memory
+            to the hardware
+*////////////////////////////////////////////////////////////////////////////////////////
+void APPL_OutputMapping(UINT16* pData)
+{
+	memcpy(&(((UINT16 *)&OUT_GENERIC0x7000)[1]),pData,SIZEOF(OUT_GENERIC0x7000)-2);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/**
+\brief    This function will called from the synchronisation ISR 
+            or from the mainloop if no synchronisation is supported
+*////////////////////////////////////////////////////////////////////////////////////////
+void process_app(TOBJ7000 *OUT_GENERIC, TOBJ6000 *IN_GENERIC);
+void APPL_Application(void)
+{
+	process_app(&OUT_GENERIC0x7000, &IN_GENERIC0x6000);
+}
