@@ -57,6 +57,14 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 只需要Arduino基础编程和电子基础知识，即可在数周时间内创造定制的IO模块。
 
+## 引脚
+
+![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/IMAGE/PINOUT.png)
+
+## 教程
+
+-待补充
+
 ## 致谢
 
 核心板硬件使用立创eda创建
