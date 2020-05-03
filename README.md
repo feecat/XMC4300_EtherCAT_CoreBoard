@@ -1,7 +1,7 @@
 # XMC4300_EtherCAT_CoreBoard
 基于xmc4300的ethercat从站核心板，与fb1111尺寸一致
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/IMAGE/IMG01.jpg)
+![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
 
 ## 起因
 ethercat是一种工业实时以太网，广泛用于自动化设备和数控机床上。它开放协议栈、实时性好、价格低，广泛用于驱动器、控制面板和IO设备，普及程度正一步步提高。
@@ -59,7 +59,7 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 ## 引脚
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/IMAGE/PINOUT.png)
+![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/PINOUT.png)
 
 ## 教程
 
