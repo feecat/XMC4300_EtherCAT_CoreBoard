@@ -16,11 +16,11 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 * beckhoff et1100
 * microchip lan9252
 
-（至少在中国，绝大多数io板卡厂家都基于这两个平台）
+实际应用中这两个平台都需要外挂单片机，并且编程门槛较高，开发环境不好搭建。
 
 使用XMC4300核心板，可以快速开发电磁阀组、面板按钮、IO模组等。
 
-本项目仍在测试阶段，参考TO DO LIST，不对成品负责。
+本项目仍在测试阶段，不对成品负责。
 
 ## 选型
 我参考了倍福官方的选型手册，fb1111原理图等，最终敲定xmc4300+ksz8081做核心板，有以下几个原因：
@@ -63,7 +63,9 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 ## 教程
 
--待补充
+1、[硬件设计](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_1_Hardware.md)
+
+2、[软件编程](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software.md)
 
 ## 致谢
 
