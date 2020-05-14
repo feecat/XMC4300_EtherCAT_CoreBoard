@@ -67,6 +67,8 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 2、[软件编程](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software.md)
 
+3、[简易输出模块](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_3_SimpleOutputModule.md)
+
 ## 致谢
 
 核心板硬件使用立创eda创建
