@@ -2,7 +2,7 @@
 
 软件编程绝大部分基于[官方示例](https://www.infineon.com/cms/en/product/promopages/aim-mc/dave_downloads.html)，下载ETHCAT_SSC_XMC43，解压后找到Getting Started - XMC4300_Relax_EtherCat_APP_Slave_SSC Example_V3.3.pdf
 
-使用立创EDA设计硬件，DAVE设计软件，不牵涉版权问题，这也是设计之初主要考虑的一点。
+使用立创EDA设计硬件，DAVE设计软件，不牵涉版权问题，这也是设计之初主要考虑的一点。调试器建议采购一个KIT_XMC45_RELAX_LITE_V1，约100元，类似STM32的NUCLEO系列，掰断即为XMCLINK，仅可对英飞凌单片机进行编程，不牵涉盗版jlink版权问题。
 
 除了[DAVE软件](https://infineoncommunity.com/dave-download_ID645)外，您需要额外准备SSC_V5i12.zip，或[EtherCAT Slave Stack Code Tool.exe](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/EtherCAT%20Slave%20Stack%20Code%20Tool.exe)。
 
