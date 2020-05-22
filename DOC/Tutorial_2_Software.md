@@ -18,7 +18,7 @@ DAVE的APP需要对照[官方视频](https://www.youtube.com/watch?v=zBh1E93ktUo
 
 2、目前版本的官方示例（V3.3）中提到SSC 5.12中有一个BUG需要在生成SSC代码后手动修改（coeappl.c，410行）。
 
-3、目前版本的APPL已改为memcpy方式，并在main.c中#include "SSC/Src/XMC_ESCObjects.h"，虽然不太理解，但我觉得还是蛮好用的。对这两点我都做了patch，可以在我的ssc/patch.zip中解压覆盖。
+3、目前版本的APPL已改为memcpy方式，并在main.c中#include "SSC/Src/XMC_ESCObjects.h"，虽然不太理解，但我觉得还是蛮好用的。对这两点我都做了patch，可以在我的ssc/patch.zip中解压覆盖。（SSC中项目名称XMC_ESC最好不要修改，XML文件名称可以另外指定）
 
 4、如果是自己新建DAVE项目，则需严格按照官方PDF匹配的版本做。
 
