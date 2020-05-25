@@ -56,9 +56,9 @@ ksz8081是在Google搜到的原理图，结合evm板组合一下，剩下就是�
 
 XMC4300F100F256标称最高运行温度是85度，K256是125度。实际使用时相对于LAN9252/ET1100，可以明显感觉XMC系列发热更高。
 
-通过[XMC_SCU_GetTemperatureMeasurement()](https://www.infineonforums.com/threads/5861-XMC4300-Onchip-Temperature)获取片上核心温度传感器，无散热片自然散热，室温25摄氏度，空运行半小时后，在XMC48RELAX板上读取到**42**摄氏度，在本项目核心板上读取到**52**摄氏度，考虑到芯片尺寸和LAYOUT差异，应在正常范围。下一版需加大底层铜皮连接。
+通过[XMC_SCU_GetTemperatureMeasurement()](https://www.infineonforums.com/threads/5861-XMC4300-Onchip-Temperature)获取片上核心温度传感器，无散热片自然散热，室温25摄氏度，空运行半小时后，在XMC48RELAX板上读取到**48**摄氏度，在本项目核心板上读取到**54**摄氏度，考虑到芯片尺寸和LAYOUT差异，应在正常范围（约700mW，~Tamp+25℃）。下一版需加大底层铜皮连接。(功率比同主频STM32或XMC4500高两倍左右，应该是塞了EtherCAT核心的关系）
 
-XMC48RELAX的5V电流约为350ma（含板载jlink），本项目核心板5V电流约为300ma，接近1117的自然散热上限（400ma左右），不建议对核心板上的3.3v做其它用处。此外定制底板时，如空间足够，建议将1117整合在底板内并加大散热焊盘以改善散热表现。
+XMC48RELAX的5V电流约为290ma（含板载jlink），本项目核心板5V电流约为210ma，5转3.3的1117自然散热上限在400ma左右，不建议对核心板上的3.3v做其它用处。此外定制底板时，如空间足够，建议将1117整合在底板内并加大散热焊盘以改善散热表现。
 
 
 
