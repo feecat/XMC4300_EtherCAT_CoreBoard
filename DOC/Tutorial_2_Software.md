@@ -52,6 +52,13 @@ UINT16 APPL_StopOutputHandler(void)
 
 之后输出的变量后加上`& outenable`即可。
 
+6、做IO一般是16位UINT变量代表16个IO，取某一位做mapping的话是这样取（移位再与0x0或0x1做与门）：
+
+```
+(OUT_GENERIC->OUT_0 >> 0) & outenable
+(OUT_GENERIC->OUT_0 >> 1) & outenable
+```
+
 ## 外围设备选择
 
 核心板上一共有25个GPIO，可以配置为2路SPI+1路I2C或2路I2C+1路SPI。
