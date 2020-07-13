@@ -1,6 +1,8 @@
 # XMC4300_EtherCAT_CoreBoard
 基于xmc4300的ethercat从站核心板，与fb1111尺寸一致
 
+**KSZ8081+外置隔离变压器的方案在50米以上通讯时ECAT_IN会有严重丢帧，ECAT_OUT会有偶尔丢帧；已测试修改LAYOUT无用。更改PHY方案为DP83848+HR911105A测试工作良好，完整测试后会更新整个项目**
+
 ![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
 
 ## 起因
