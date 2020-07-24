@@ -1,64 +1,60 @@
-## 硬件设计过程
-EtherCAT从站芯片参考[https://www.ethercat.org/download/documents/ESC_Overview.pdf](https://www.ethercat.org/download/documents/ESC_Overview.pdf)。
-主要分为三大类：
-- 纯从站，需配上位机，如lan9252
-- 嵌入内核，如xmc4800
-- 软核+实时硬核，如amic110
+## Hardware design
+EtherCAT slave chip reference[https://www.ethercat.org/download/documents/ESC_Overview.pdf](https://www.ethercat.org/download/documents/ESC_Overview.pdf)。
+Mainly divided into three categories:
+- Pure slave, need to be equipped with host computer, such as lan9252
+- Embedded core, such as xmc4800
+- Soft core + real-time hard core, such as amic110
 
-设计之初需要考虑好不好购买和技术支持，毕竟不是大厂批量采购，技术支持全靠谷歌。这样筛选下来就剩：
+At the beginning of the design, you need to consider whether to purchase and technical support. After all, it is not a large-scale purchase from a large factory. The technical support depends on Google. This filter is left:
 - lan9252
 - amic110
 - xmc4800
 
-9252+STM32的方案很多了，国内至少十几家在做，也有热心网友如[丁丁的个人网站](https://www.hexcode.cn/article/5e3ee9a835616641b2daef97)将整个流程清晰完整地展现出来。但我觉得门槛仍有些高。
+There are many 9252+STM32 solutions, and there are also enthusiastic netizens such as[丁丁的个人网站](https://www.hexcode.cn/article/5e3ee9a835616641b2daef97)Show the entire process clearly and completely. But I think the programming threshold is still a bit high.
 
-amic110的资料实在太少太复杂，我连官方教程（基于TI CCS IDE）配置都没有通过。
+The information of amic110 is too little and too complicated. I didn't even pass the official tutorial (based on TI CCS IDE) configuration.
 
-XMC4800资料多，EVM板价格也比较适中，买了个测试了挺久。缺点也是有的，外挂phy太占用引脚了。
+XMC4800 has a lot of information, and the price of EVM board is relatively moderate. I bought it and tested it for a long time. There are also disadvantages. The external phy takes up too much pins.
 
-我的硬件设计是工作中自学的，断断续续做一些小电路板测试。xmc4300最纠结的就是PHY选择。硬件设计可能会有不少问题，恳请各位指正。
+I learned my hardware design by myself at work, doing some small circuit board tests on and off. There may be a lot of problems in the hardware design, so please correct me.
 
-## 设计目标
+## Design Target
 
-xmc4800 relax板的phy是bcm5241，但它需要的外围器件较多，相关资料也少。参考了倍福的phy selection后，结合购买渠道决定用microchip的ksz8081mnx，在立创、淘宝、贸泽、云汉上都能买到，价格不贵，外围电路也更简单。
+The phy of the xmc4800 relax board is bcm5241, but it requires more peripheral devices and less relevant information. After referring to Beckhoff's phy selection, we decided to use TI DP83848 in combination with purchase channels, which can be bought on Lichuang, Taobao, Mouser, and Yunhan. The price is not expensive and the peripheral circuit is simpler.
 
-由于4层板打样价格较高，xmc4300又是lqfp100封装，所以初期目标就是2层PCB，打样了一套后跑起来了，但有两个问题：
+Due to the high price of 4-layer board proofing, the xmc4300 is packaged in lqfp100, so the initial goal is 2-layer PCB. After proofing a set, it works (KSZ8081 was used at the time), but there was serious frame loss when testing long-distance communication , Re-layout has no effect.
 
-1、 [phy手册](https://download.beckhoff.com/download/Document/io/ethercat-development-products/an_phy_selection_guidev2.6.pdf)说明ksz8081需要对phy的LED模式做更改，否则可能在link up时丢帧。我不明白如何修改，打样出来也没有问题，后期就把两个0r电阻去掉了，但仍然保留了phy的串口。
+I happened to see a beckhoff fb1111 core board on a device, and I wanted to try to make a size-compatible board.
 
-2、 官方evm板对phy reset做了buffer，我没有做，只是加了个电容。
+In summary, the goals are the following:
+- xmc4300＋DP83848
+- Double-layer PCB, single-sided SMT, as few components as possible
+- The size is the same as fb1111, and the pins are as compatible as possible (spi slave mode, so that the original fb1111 only needs to modify the program to be compatible)
+- Try to use common and easy-to-purchase components, and try to use 0603 package.
 
-由于工作较忙搁置了一段时间，之后再用的话发现做出来的核心板没有意义，24v供电处理占用了1/3的PCB空间。偶然在一个设备上看到自制的fb1111核心板，便想尝试做个尺寸兼容的板子试试。
+## Design
 
-综上，目标是以下几点：
-- xmc4300＋ksz8081（已验证）
-- 双层PCB，单面贴片，元器件尽可能少
-- 尺寸和fb1111一致，引脚尽量兼容（spi从模式，这样原先使用fb1111的只需要修改程序即可兼容）
-- 尽量使用通用、易采购的元器件，尽量使用0603封装。
+The pinout refers to the official xmc4300 ethercat template. I think the official pin should be reliable, so I just copied it.
 
-## 设计过程
+DP83848 refers to the official design, but some resistors are removed due to space constraints.
 
-pinout参考了官方的xmc4300 ethercat模板，我觉得官方选择的引脚应该是可靠的，所以直接照搬。
+The network port capacitor uses two 2kv withstand voltage capacitors and is connected to PE. Refer to this part[original schematic](https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc)。
 
-ksz8081是在Google搜到的原理图，结合evm板组合一下，剩下就是简单连线了。
+Due to the limited board space, tvs, inductors, and electrolytic capacitors cannot be placed, so the power supply part is simplified as much as possible, and the protection is mainly done on the bottom plate.
 
-网口电容用了4个2kv耐压电容，并与PE相连，这部分参考[原始原理图](https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc)。
+HR913550A and HR911105A are Pin2Pin compatible, both can be used, and the pitch is 2.54, which can be directly soldered to the expansion board.
 
-由于板子空间有限，放不下tvs、电感、电解电容了，所以供电部分尽量简化，防护主要做在底板上。
+The 1117 has a large heat, and the heat dissipation pad is added but it is still hot, but it is used normally.
 
-网口做了个4pin ph插座，不焊rj45可以改m12插座，或焊排针把核心板隐藏到内部（焊排针可以保留网口LED指示）。
+In addition, It is recommended to separately supply a 5v power supply to the core board. I use tps5430 and strictly follow the official layout, and it works well. I understand that electrical isolation does not require isolation of dcdc, so that they do not interfere with each other.
 
-第一版dc模式且双网口都在工作时，1117会略有发热，估算约50度，第二版加了一个小焊盘辅助散热，目前这一版还没有打样，但改动不大。
+## Temperature Problem
 
-此外，实际测试时发现外围设备对电源的影响还是蛮大的，建议单独给核心板一个5v供电。dcdc水也很深，我用的是tps5430并严格按照官方layout，使用良好。外围设备有用5v的可以再来一个，3.3v的单独挂一个1117也ok。我理解的电气隔离并不需要隔离dcdc，让它们互不干扰即可。
+XMC4300F100F256 maximum operating temperature is 85 degrees, and K256 is 125 degrees. Compared with LAN9252/ET1100 in actual use, it is obvious that the XMC series heats up higher.
 
-## 温度问题
+By [XMC_SCU_GetTemperatureMeasurement()](https://www.infineonforums.com/threads/5861-XMC4300-Onchip-Temperature)Get on-chip core temperature sensor, natural heat dissipation, room temperature 25 degrees Celsius, after half an hour of dry running, it reads **48** degrees on the XMC48RELAX board, and **54** degrees on the core board of this project, considering the chip The difference between size and LAYOUT should be in the normal range (about 700mW, ~Tamp+25℃). The next edition needs to increase the bottom copper connection. (The power is about twice higher than the same main frequency STM32 or XMC4500, which should be due to the EtherCAT core)
 
-XMC4300F100F256标称最高运行温度是85度，K256是125度。实际使用时相对于LAN9252/ET1100，可以明显感觉XMC系列发热更高。
-
-通过[XMC_SCU_GetTemperatureMeasurement()](https://www.infineonforums.com/threads/5861-XMC4300-Onchip-Temperature)获取片上核心温度传感器，无散热片自然散热，室温25摄氏度，空运行半小时后，在XMC48RELAX板上读取到**48**摄氏度，在本项目核心板上读取到**54**摄氏度，考虑到芯片尺寸和LAYOUT差异，应在正常范围（约700mW，~Tamp+25℃）。下一版需加大底层铜皮连接。(功率比同主频STM32或XMC4500高两倍左右，应该是塞了EtherCAT核心的关系）
-
-XMC48RELAX的5V电流约为290ma（含板载jlink），本项目核心板5V电流约为210ma，5转3.3的1117自然散热上限在400ma左右，不建议对核心板上的3.3v做其它用处。此外定制底板时，如空间足够，建议将1117整合在底板内并加大散热焊盘以改善散热表现。
+The 5V current of XMC48RELAX is about 290ma (including onboard jlink), the 5V current of the coreboard of this project is about 210ma, and the natural heat dissipation limit of the 5 to 3.3 1117 is about 400ma. It is not recommended to use the 3.3v on the core board for other purposes. In addition, when customizing the bottom plate, if there is enough space, it is recommended to integrate the 1117 into the bottom plate and increase the thermal pad to improve the heat dissipation performance.
 
 
 

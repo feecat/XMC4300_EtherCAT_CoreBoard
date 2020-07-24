@@ -1,39 +1,39 @@
-## 软件编程过程
+## Software Program
 
-软件编程绝大部分基于[官方示例](https://www.infineon.com/cms/en/product/promopages/aim-mc/dave_downloads.html)，下载ETHCAT_SSC_XMC43，解压后找到Getting Started - XMC4300_Relax_EtherCat_APP_Slave_SSC Example_V3.3.pdf
+Software programming is mostly based on[Official example](https://www.infineon.com/cms/en/product/promopages/aim-mc/dave_downloads.html), Download ETHCAT_SSC_XMC43, after unzip, found: Getting Started - XMC4300_Relax_EtherCat_APP_Slave_SSC Example_V3.3.pdf
 
-使用立创EDA设计硬件，DAVE设计软件，不牵涉版权问题，这也是设计之初主要考虑的一点。不过调试器需要jlink，可选以下三个方法：
+Using LCEDA to design hardware and DAVE to design software does not involve copyright issues, which is also the main consideration at the beginning of the design. But the debugger needs jlink, and you can choose the following three methods:
 
-- 盗版Jlink V9 Mini。~50
-- KIT_XMC45_RELAX_LITE_V1，掰断即为XMCLINK，仅可对英飞凌单片机进行编程，不过仍有教育版授权问题。~100
-- KITXMCLINKSEGGERV1TOBO1，仅可对英飞凌单片机进行编程。~700
+- chinese Jlink V9 Mini copy. ~50
+- KIT_XMC45_RELAX_LITE_V1, Break it is XMCLINK, only Infineon MCU can be programmed, but there are still education version authorization issues. ~100
+- KITXMCLINKSEGGERV1TOBO1, Only Infineon MCU can be programmed. ~700
 
-除了[DAVE软件](https://infineoncommunity.com/dave-download_ID645)外，您需要额外准备SSC_V5i12.zip，或[EtherCAT Slave Stack Code Tool.exe](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/EtherCAT%20Slave%20Stack%20Code%20Tool.exe)。
+Except[DAVE4](https://infineoncommunity.com/dave-download_ID645)In addition, you need to prepare additional SSC_V5i12.zip, or[EtherCAT Slave Stack Code Tool.exe](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/EtherCAT%20Slave%20Stack%20Code%20Tool.exe)
 
-由于我没有系统性学习过C语言，对指针、函数等基础知识可能理解有误，恳请各位指正。
+Since I have not studied the C language systematically, I may have misunderstood the basic knowledge of pointers, functions, etc., please correct me.
 
-## 开始
+## Start
 
-DAVE的APP需要对照[官方视频](https://www.youtube.com/watch?v=zBh1E93ktUo)熟悉一下，我觉得还是比较好用的。加完APP每次修改完需要Generate Code不要忘了。
+DAVE's APP needs to be compared[Official video](https://www.youtube.com/watch?v=zBh1E93ktUo), I think it's easier to use. Don’t forget to generate Code after adding APP and every time you modify it.
 
-## 需要注意的内容
+## Things to note
 
-1、视频教程比较老，实际需要参考官方示例（ETHCAT_SSC_XMC43）里的PDF教程。
+1、The video tutorial is relatively old, you actually need to refer to the PDF tutorial in the official example (ETHCAT_SSC_XMC43).
 
-2、目前版本的官方示例（V3.3）中提到SSC 5.12中有一个BUG需要在生成SSC代码后手动修改（coeappl.c，410行）。
+2、The current version of the official example (V3.3) mentioned that there is a BUG in SSC 5.12 that needs to be manually modified after generating the SSC code (coeappl.c, line 410).
 
-3、目前版本的APPL已改为memcpy方式，并在main.c中#include "SSC/Src/XMC_ESCObjects.h"，虽然不太理解，但我觉得还是蛮好用的。对这两点我都做了patch，可以在我的ssc/patch.zip中解压覆盖。（SSC中项目名称XMC_ESC最好不要修改，XML文件名称可以另外指定）
+3、The current version of APPL has been changed to memcpy, and #include "SSC/Src/XMC_ESCObjects.h" in main.c. Although I don't understand it, I think it's pretty easy to use. I have patched both of these points, which can be decompressed and overwritten in my ssc/patch.zip. (It is better not to modify the project name XMC_ESC in SSC, and the XML file name can be specified separately)
 
-4、如果是自己新建DAVE项目，则需严格按照官方PDF匹配的版本做。
+4、If you are creating a new DAVE project yourself, you must strictly follow the official PDF matching version.
 
-5、总线断开时IO设备也需要关闭输出，可以在main中添加：
+5、The IO device also needs to turn off the output when the ethercat bus is disconnected, which can be added in main:
 ```
 //Output Enable
   uint8_t outenable;
   void process_stopoutput(){outenable=false;}
   void process_startoutput(){outenable=true;}
 ```
-并在/SSC/src/XMC_ESC.c的153、170行左右添加
+And add it around lines 153 and 170 of /SSC/src/XMC_ESC.c
 ```
 void process_startoutput();
 UINT16 APPL_StartOutputHandler(void)
@@ -50,24 +50,26 @@ UINT16 APPL_StopOutputHandler(void)
 }
 ```
 
-之后输出的变量后加上`& outenable`即可。
+Add `& outenable` or if judgment after the output variable.
 
-6、做IO一般是16位UINT变量代表16个IO，取某一位做mapping的话是这样取（移位再与0x0或0x1做与门）：
+6、IO is generally a 16-bit UINT variable that represents 16 IOs. If you take a bit for mapping, you can take it like this (shift and 0x0 or 0x1 for AND gate):
 
 ```
 (OUT_GENERIC->OUT_0 >> 0) & outenable
 (OUT_GENERIC->OUT_0 >> 1) & outenable
 ```
 
-## 外围设备选择
 
-核心板上一共有25个GPIO，可以配置为2路SPI+1路I2C或2路I2C+1路SPI。
 
-单片机自带的模拟引脚我都没有引出，一方面是2层板layout困难，另一方面是工业上需要做好隔离。可以考虑用ADS1015/MCP4728+LM258之类的器件通讯。
+## Peripheral equipment selection
 
-数字IO扩展我比较推荐I2C方式+PCF8574，IO模块对速率要求并不严格。前后挂光耦或MOS管，或是VN808之类的智能高边芯片即可。
+There are a total of 25 GPIOs on the core board, which can be configured as 2 SPI+1 I2C or 2 I2C+1 SPI.
 
-官方的I2C APP中error回调不太好用，一旦发生通讯异常I2C很可能会卡死。建议将I2C的interrupt中tx rx callback关联到i2c_txrx_callback上，具体代码如下：
+I didn't lead out the analog pins of the single-chip microcomputer. On the one hand, it is difficult to lay out the 2-layer board, and on the other hand, the industry needs to be well isolated. Consider communicating with devices such as ADS1015/MCP4728+LM258.
+
+For digital IO expansion, I recommend I2C +PCF8574/PCF8575. The IO module does not require strict speed. Mount the front and rear optocouplers or MOS tubes (TBD62783), or smart high-side chips such as VN808.
+
+The error callback in the official I2C APP is not very useful. Once a communication abnormality occurs, I2C may be stuck. It is recommended to associate tx rx callback in I2C interrupt with i2c_txrx_callback, the specific code is as follows:
 
 ```
 void i2c_txrx_callback(void){i2c_completion = 1;}
@@ -89,10 +91,28 @@ void i2c_wait(){
 }
 ```
 
-实际通讯时使用如下代码：
+The following code is used in actual communication. I2C is recommended to be added under Mainloop, not in process app:
 
 ```
     I2C_MASTER_Receive(&I2C_MASTER_0,true,0x4F,received_data,2,true,true);
     i2c_wait();
 ```
+And in Dave APP (Dave\Generated\I2C_MASTER\I2C_Master.C) the following lines:
 
+```
+Line 323:    while (!XMC_USIC_CH_TXFIFO_IsEmpty(handle->channel)){}
+Line 445:    while (XMC_USIC_CH_GetTransmitBufferStatus(handle->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY){}
+Line 1052:    while (XMC_USIC_CH_GetTransmitBufferStatus(handle->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY){}
+```
+
+Add the following patch: (count can be changed according to the actual situation), otherwise the EMC test will probably not pass.
+
+```
+uint32_t count = 0;
+while (!XMC_USIC_CH_TXFIFO_IsEmpty(handle->channel)){
+	count++;
+	if (count > 1000){
+		return;
+	}
+}
+```

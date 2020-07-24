@@ -1,75 +1,75 @@
 # XMC4300_EtherCAT_CoreBoard
-基于xmc4300的ethercat从站核心板，与fb1111尺寸一致
-
-**KSZ8081+外置隔离变压器的方案在50米以上通讯时ECAT_IN会有严重丢帧，ECAT_OUT会有偶尔丢帧；已测试修改LAYOUT无用。更改PHY方案为DP83848+HR911105A测试工作良好，完整测试后会更新整个项目**
+![中文](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)
+Ethercat slave core board based on xmc4300, same size as beckhoff fb1111
 
 ![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
 
-## 起因
-ethercat是一种工业实时以太网，广泛用于自动化设备和数控机床上。它开放协议栈、实时性好、价格低，广泛用于驱动器、控制面板和IO设备，普及程度正一步步提高。
+## Origin
 
-在很多设备上，研发人员疲于应对现场问题，对IO模块往往分为两个极端：
+Ethercat is an industrial real-time Ethernet, Widely used in automation equipment and CNC machine tools. It has an open sources protocol stack, good real-time performance, and low price. It is widely used in drives, control panels and IO devices, and its popularity is increasing step by step.
 
-- 基于Modbus，只需要一颗stm32f103即可，速率限制较大，稳定性也较差（普遍为光耦或三极管输出），价格低廉。
-- 基于ethercat的模块，例如倍福el系列io模块，价格高昂，稳定性极佳。
+On many devices, R&D personnel are tired of dealing with on-site problems, and IO modules are often divided into two extremes:
 
-但即使是采用了价格较高的倍福模块，当使用需求较高时，在电气柜内仍需要错综复杂的接线。对于标准化的设备来说，工人接线越多故障率也越高。部分厂家开始定制ethercat模块。它们主要基于以下两大平台：
+- Based on Modbus, only one stm32f103 is needed, the communication rate is limited, the stability is also poor (generally optocoupler or triode output), and the price is low.
+- Ethercat-based modules, such as Beckhoff el series io modules, are expensive and have excellent stability.
+
+But even if the higher-priced Beckhoff module is used, intricate wiring is still required in the electrical cabinet. For standardized equipment, the more worker wiring the higher the failure rate. Some manufacturers began to customize ethercat modules. They are mainly based on the following two platforms:
 
 * beckhoff et1100
 * microchip lan9252
 
-实际应用中这两个平台都需要外挂单片机，并且编程门槛较高，开发环境不好搭建。
+In actual applications, both platforms require external MCUs, and programming is difficult, and the development environment is not easy to build.
 
-使用XMC4300核心板，可以快速开发电磁阀组、面板按钮、IO模组等。
+Using the XMC4300 core board, you can quickly develop solenoid valve groups, panel buttons, IO modules, etc.
 
-本项目仍在测试阶段，不对成品负责。
+This project is still in the testing stage and is not responsible for the finished product.
 
-## 选型
-我参考了倍福官方的选型手册，fb1111原理图等，最终敲定xmc4300+DP83848做核心板，有以下几个原因：
-1. xmc4300自带cortex m4内核，不需要外挂单片机
-2. infineon的Dave软件非常完善，解压即用
-3. 尺寸兼容倍福fb1111，双层PCB，单面贴片，除了网口和排针外无插件原件。100批量下单件成本约130元
-4. 稳定性高，核心板外接线简单
-5. 两路i2c，一路spi（或两路spi，一路i2c，可配置）
+## Selection
+I refer to the Beckhoff official selection manual, fb1111 schematics, etc., and finally finalized xmc4300+DP83848 as the core board. There are several reasons:
+1. xmc4300 comes with cortex-m4 core, no need for external MCU
+2. Infineon's Dave4 software is very complete, ready to use after decompression
+3. The size is compatible with Beckhoff fb1111, double-layer PCB, single-sided SMT, no plug-in components except the network port and pin header. The cost of ordering 100 batches is about RMB130
+4. High stability, simple external wiring of the core board
+5. Two i2c, one spi (or two spi, one i2c, configurable)
 
-参考了部分开源的：[diebieslave](https://github.com/DieBieEngineering/DieBieSlave) 、 [FreeECAT](https://github.com/suda-morris/FreeECAT) 、 [arducat](https://github.com/ethercat-diy/arducat)
-，商业的：[Esmacat](https://www.esmacat.com/ease) 、 [easycat](https://www.bausano.net/en/hardware/ethercat-e-arduino/easycat.html) 。
+Refer to some open source:[diebieslave](https://github.com/DieBieEngineering/DieBieSlave) 、 [FreeECAT](https://github.com/suda-morris/FreeECAT) 、 [arducat](https://github.com/ethercat-diy/arducat)
+,commercial:[Esmacat](https://www.esmacat.com/ease) 、 [easycat](https://www.bausano.net/en/hardware/ethercat-e-arduino/easycat.html) 。
 
-综合比较下，xmc4300价格更合适、更适合工业环境。
+Under comprehensive comparison, the price of xmc4300 is more suitable and suitable for industrial environment.
 
-## 成本
+## Cost
 
-| 名称 | 数量 | 价格 | 链接 |
+| Name | Quantity | Price | Link |
 | :-----: | :-----: | :------: | :------ |
 | xmc4300| 1 | 55 | https://www.ickey.cn/detail/1003022093547/XMC4300F100K256AAXUMA1.html |
 | DP83848IVV | 2 | 16 | https://www.ickey.cn/detail/100300320411267/DP83848IVVX__point__NOPB.html |
 | HR913550A | 2 | 8 | https://item.szlcsc.com/174889.html |
-| 其它元器件 | 1 | 10 | - |
+| Others | 1 | 10 | - |
 | PCB | 1 | 3 | - |
 | SMT | 1 | 16 | - |
-| 合计 | - | 108 | - |
+| Total | - | 108 | - |
 
-- 成本按照50台套单价计算
-- XMC4300价格波动较大，最低54，最高95。
-- SMT可以在立创做，单片折合约10元。第三方做一般开机费800
-- 故核心板总成本在99~150之间，考虑物料折损等，一般取130为实际成本
+- The cost is calculated according to the unit price of 50 sets
+- The price of XMC4300 fluctuates greatly, the lowest is 54 and the highest is 95.
+- SMT can be made in szjlc, and the contract is 10 yuan per piece. The third party does a general startup fee of 800
+- Therefore, the total cost of the core board is between 99 and 150. Considering material loss, etc., generally 130 is the actual cost
 
-## 目标
+## Target
 
-只需要Arduino基础编程和电子基础知识，即可在数周时间内创造定制的IO模块。
+You only need basic Arduino programming and basic electronic knowledge to create a customized IO module in a few weeks.
 
-## 引脚
+## Pinout
 
 ![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/PINOUT.png)
 
-## 教程
+## Tutorial
 
-1、[硬件设计](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_1_Hardware.md)
+1、[Hardware Design](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_1_Hardware.md)
 
-2、[软件编程](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software.md)
+2、[Software Program](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software.md)
 
-3、[简易输出模块](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_3_SimpleOutputModule.md)
+3、[Simple Output Module](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_3_SimpleOutputModule.md)
 
-## 致谢
+## Acknowledgement
 
-核心板硬件使用立创eda创建
+The core board hardware is created using LCEDA
