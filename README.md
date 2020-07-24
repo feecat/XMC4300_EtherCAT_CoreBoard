@@ -1,6 +1,6 @@
 # XMC4300_EtherCAT_CoreBoard
 
-![中文](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)
+[中文](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)
 
 Ethercat slave core board based on xmc4300, same size as beckhoff fb1111
 
