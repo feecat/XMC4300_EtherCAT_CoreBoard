@@ -6,6 +6,11 @@ Ethercat slave core board based on xmc4300, same size as beckhoff fb1111
 
 ![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
 
+I have manufactured 30 pcs and all works well.I think i have finish it. Next we will made more 100 pcs in china. I will update the process.
+
+![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/Manufactured.jpg)
+
+
 ## Origin
 
 Ethercat is an industrial real-time Ethernet, Widely used in automation equipment and CNC machine tools. It has an open sources protocol stack, good real-time performance, and low price. It is widely used in drives, control panels and IO devices, and its popularity is increasing step by step.
