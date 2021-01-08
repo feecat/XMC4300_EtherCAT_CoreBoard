@@ -1,6 +1,8 @@
 # XMC4300_EtherCAT_CoreBoard
 
-[中文](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)
+[中文文档](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)  
+购买地址已公开->  [EtherCAT 从站 核心板 英飞凌XMC4300 开源 IO模块 CiA402](https://item.taobao.com/item.htm?id=635638167466)  
+IO模块的设计方案已公开->  [数字与模拟信号的输入输出模块设计指南](https://www.codeaw.com/archives/355)
 
 Ethercat slave core board based on xmc4300, same size as beckhoff fb1111
 
