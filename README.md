@@ -1,16 +1,16 @@
 # XMC4300_EtherCAT_CoreBoard
 
-[中文文档](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/README_CN.md)  
+[中文文档](/DOC/README_CN.md)  
 购买地址已公开->  [EtherCAT 从站 核心板 英飞凌XMC4300 开源 IO模块 CiA402](https://item.taobao.com/item.htm?id=635638167466)  
 IO模块的设计方案已公开->  [数字与模拟信号的输入输出模块设计指南](https://www.codeaw.com/archives/355)
 
 Ethercat slave core board based on xmc4300, same size as beckhoff fb1111
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
+![](/DOC/IMAGE/IMG01.jpg)
 
 I have manufactured 30 pcs and all works well.I think i have finish it. Next we will made more 100 pcs in china. I will update the process.
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/Manufactured.jpg)
+![](/DOC/IMAGE/Manufactured.jpg)
 
 
 ## Origin
@@ -69,15 +69,15 @@ You only need basic Arduino programming and basic electronic knowledge to create
 
 ## Pinout
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/PINOUT.png)
+![](/DOC/IMAGE/PINOUT.png)
 
 ## Tutorial
 
-1、[Hardware Design](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_1_Hardware.md)
+1、[Hardware Design](/DOC/Tutorial_1_Hardware.md)
 
-2、[Software Program](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software.md)
+2、[Software Program](/DOC/Tutorial_2_Software.md)
 
-3、[Simple Output Module](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_3_SimpleOutputModule.md)
+3、[Simple Output Module](/DOC/Tutorial_3_SimpleOutputModule.md)
 
 ## Acknowledgement
 

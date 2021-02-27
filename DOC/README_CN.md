@@ -2,7 +2,7 @@
 
 基于xmc4300的ethercat从站核心板，与fb1111尺寸一致
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/IMG01.jpg)
+![](/DOC/IMAGE/IMG01.jpg)
 
 ## 起因
 
@@ -61,15 +61,15 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 ## 引脚
 
-![](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/IMAGE/PINOUT.png)
+![](/DOC/IMAGE/PINOUT.png)
 
 ## 教程
 
-1、[硬件设计](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_1_Hardware_CN.md)
+1、[硬件设计](/DOC/Tutorial_1_Hardware_CN.md)
 
-2、[软件编程](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_2_Software_CN.md)
+2、[软件编程](/DOC/Tutorial_2_Software_CN.md)
 
-3、[简易输出模块](https://github.com/feecat/XMC4300_EtherCAT_CoreBoard/blob/master/DOC/Tutorial_3_SimpleOutputModule_CN.md)
+3、[简易输出模块](/DOC/Tutorial_3_SimpleOutputModule_CN.md)
 
 ## 致谢
 
