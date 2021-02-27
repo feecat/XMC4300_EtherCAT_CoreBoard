@@ -61,7 +61,7 @@ ethercat是一种工业实时以太网，广泛用于自动化设备和数控机
 
 ## 引脚
 
-![](/DOC/IMAGE/PINOUT.png)
+![](/DOC/IMAGE/PINOUT_NEW.png)
 
 ## 教程
 

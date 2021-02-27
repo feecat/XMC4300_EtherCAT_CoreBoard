@@ -69,7 +69,7 @@ You only need basic Arduino programming and basic electronic knowledge to create
 
 ## Pinout
 
-![](/DOC/IMAGE/PINOUT.png)
+![](/DOC/IMAGE/PINOUT_NEW.png)
 
 ## Tutorial
 
